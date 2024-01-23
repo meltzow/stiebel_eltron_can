@@ -1,11 +1,11 @@
 {
   "codeowners": ["@meltzow"],
-  "config_flow": true,
+  "config_flow": false,
   "dependencies": [],
   "documentation": "https://github.com/meltzow/stiebel_eltron_can",
   "domain": "stiebel_eltron_can",
   "iot_class": "local_polling",
   "name": "Stiebel Eltron CAN",
   "requirements": ["python-can==4.3.1"],
-  "version": "0.0.3"
+  "version": "0.0.4"
 }
