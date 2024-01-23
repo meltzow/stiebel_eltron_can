@@ -38,11 +38,11 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     Will automatically load climate platform.
     """
     name = config[DOMAIN][CONF_NAME]
-    modbus_client = hass.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
+    #modbus_client = hass.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
 
     hass.data[DOMAIN] = {
         "name": name,
-        "ste_data": StiebelEltronData(name, modbus_client),
+        "ste_data": StiebelEltronData(name),
     }
 
     discovery.load_platform(hass, Platform.CLIMATE, DOMAIN, {}, config)
@@ -52,7 +52,7 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
 class StiebelEltronData:
     """Get the latest data and update the states."""
 
-    def __init__(self, name, modbus_client):
+    def __init__(self, name):
         """Init the STIEBEL ELTRON data object."""
 
         #self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
