@@ -1,6 +1,7 @@
 """Support for stiebel_eltron climate platform."""
 from __future__ import annotations
 
+import random
 import logging
 from typing import Any
 
@@ -96,7 +97,9 @@ class StiebelEltron(ClimateEntity):
         #FIXME
         #self._target_temperature = self._ste_data.api.get_target_temp()
         #self._current_temperature = self._ste_data.api.get_current_temp()
+        self._current_temperature = random.uniform(10.5, 20.5)
         #self._current_humidity = self._ste_data.api.get_current_humidity()
+        self._current_humidity = random.uniform(10.5, 40.5)
         #self._filter_alarm = self._ste_data.api.get_filter_alarm_status()
         #self._operation = self._ste_data.api.get_operation()
 
