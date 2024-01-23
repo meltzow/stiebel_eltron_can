@@ -6,6 +6,6 @@
   "domain": "stiebel_eltron_can",
   "iot_class": "local_polling",
   "name": "Stiebel Eltron CAN",
-  "requirements": [],
+  "requirements": ["python-can==4.3.1"],
   "version": "0.0.1"
 }
