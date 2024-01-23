@@ -53,12 +53,13 @@ class StiebelEltronData:
     def __init__(self, name, modbus_client):
         """Init the STIEBEL ELTRON data object."""
 
-        self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
+        #self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     def update(self):
         """Update unit data."""
-        if not self.api.update():
-            _LOGGER.warning("Modbus read failed")
-        else:
-            _LOGGER.debug("Data updated successfully")
+        _LOGGER.error("foo bar after 30 secs")
+        #if not self.api.update():
+        #    _LOGGER.warning("Modbus read failed")
+        #else:
+        #    _LOGGER.debug("Data updated successfully")
