@@ -1,6 +1,8 @@
 from datetime import timedelta
 import logging
 
+import voluptuous as vol
+
 from homeassistant.const import CONF_NAME, DEVICE_DEFAULT_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import discovery
