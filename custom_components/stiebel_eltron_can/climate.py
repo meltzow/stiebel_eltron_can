@@ -93,11 +93,12 @@ class StiebelEltron(ClimateEntity):
         self._ste_data.update(no_throttle=self._force_update)
         self._force_update = False
 
-        self._target_temperature = self._ste_data.api.get_target_temp()
-        self._current_temperature = self._ste_data.api.get_current_temp()
-        self._current_humidity = self._ste_data.api.get_current_humidity()
-        self._filter_alarm = self._ste_data.api.get_filter_alarm_status()
-        self._operation = self._ste_data.api.get_operation()
+        #FIXME
+        #self._target_temperature = self._ste_data.api.get_target_temp()
+        #self._current_temperature = self._ste_data.api.get_current_temp()
+        #self._current_humidity = self._ste_data.api.get_current_humidity()
+        #self._filter_alarm = self._ste_data.api.get_filter_alarm_status()
+        #self._operation = self._ste_data.api.get_operation()
 
         _LOGGER.debug(
             "Update %s, current temp: %s", self._name, self._current_temperature
