@@ -1,6 +1,20 @@
 # Stiebel Eltron CAN for Home Assistant
+This custom integration for Home Assistant allows users to monitor the status of their Stiebel Eltron heat pump directly from their Home Assistant instance. The integration fetches the status by CAN Bus and presents it as sensor entities in Home Assistant.
 
 ## Installation
+### Via HACS (Home Assistant Community Store)
+1. Navigate to the HACS page on your Home Assistant instance.
+2. Go to the "Integrations" tab and click the "Explore & Add Repositories" button.
+3. Search for "Stiebel Eltron CAN" and select it.
+4. Click on "Install this repository in HACS".
+5. Restart your Home Assistant instance.
+
+### Manual Installation
+1. Clone this repository or download the zip file.
+2. Copy the stiebel_eltron_can directory from the custom_components directory in this repository to the custom_components directory on your Home Assistant instance
+3. Restart your Home Assistant instance.
+
+
 
 ## theory
 
