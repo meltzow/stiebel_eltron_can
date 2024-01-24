@@ -11,11 +11,16 @@ jobs:
         python-version: [3.7]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      
+      - name: unsecure command execution by setting the `ACTIONS_ALLOW_UNSECURE_COMMANDS` environment variable to `true`
+        id: step_one
+        run: |
+          echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> "$GITHUB_ENV"
 
       - name: Set PY env
         run: echo "::set-env name=PY::$(python -VV | sha256sum | cut -d' ' -f1)"
