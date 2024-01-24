@@ -24,15 +24,18 @@ This custom integration for Home Assistant allows users to monitor the status of
 ## setup the can bus on homeassistant OS: 
 0.) richtiger ssh benötigt!!!
 1.) apk add iproute2 
-2.) pip install python-can
-pip install python-can --break-system-packages
+2.) pip install python-can --break-system-packages
 
 
-ip link set can0 type can bitrate 125000
-ip link set dev can0 up type can bitrate 500000
+ip link set can0 txqueuelen 1000
+ip link set dev can0 up type can bitrate 50000
+ip -details link show can0
 
 see https://elinux.org/Bringing_CAN_interface_up
+https://python-can.readthedocs.io/en/stable/interfaces/socketcan.html
 
 ## Development
 * pip3 install homeassistant --break-system-packages
 * pip install python-can
+* apk add can-utils
+* candump can0
