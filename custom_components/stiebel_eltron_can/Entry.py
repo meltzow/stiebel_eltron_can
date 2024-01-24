@@ -42,13 +42,13 @@ class ReadOnlyFormulaEntry(BaseEntry):
         self.values = {}  # type: Dict[str, object]
 
     def getElsterIndices(self):
-        return self.variables.itervalues()
+        return self.variables.values()
 
     def parseCanValue(self, elster_index, value):
         # type: (int, int) -> object
         changed = False
         # noinspection PyTypeChecker
-        for (variable, elstid) in self.variables.iteritems():
+        for (variable, elstid) in self.variables.items():
             if elstid == elster_index:
                 self.values[variable] = value
                 changed = True
