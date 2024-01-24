@@ -1,6 +1,6 @@
 from paho.mqtt.client import Client as MqttClient, MQTTMessage
 
-import config
+#import config
 from bridges.BaseBridge import BaseBridge
 
 
@@ -33,8 +33,9 @@ class MqttBridge(BaseBridge):
         self.binding.onApiMessage(topic, msg.payload)
 
     def start(self):
-        print("mqtt connect to:", config.MQTT['host'])
-        self.client.connect(config.MQTT['host'])
+        #FIXME
+        #print("mqtt connect to:", config.MQTT['host'])
+        #self.client.connect(config.MQTT['host'])
         self.client.loop_start()
 
     def stop(self):
