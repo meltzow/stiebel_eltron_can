@@ -10,7 +10,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import Throttle
 
-from bindings.elster.ElsterBinding import ElsterBinding
+from ElsterBinding import ElsterBinding
 
 CONF_HUB = "hub"
 DEFAULT_HUB = "modbus_hub"

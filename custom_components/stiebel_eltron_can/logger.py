@@ -4,7 +4,7 @@ import time
 
 import can
 
-from bindings.elster.ElsterFrame import ElsterFrame
+from ElsterFrame import ElsterFrame
 
 
 def on_can_message(msg):

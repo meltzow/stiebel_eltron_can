@@ -3,9 +3,9 @@
 from time import sleep
 
 import config
-from bindings.elster.ElsterBinding import ElsterBinding
-from bridges.InfluxDBBridge import InfluxDBBridge
-from bridges.MqttBridge import MqttBridge
+from ElsterBinding import ElsterBinding
+from InfluxDBBridge import InfluxDBBridge
+from MqttBridge import MqttBridge
 
 binding = ElsterBinding(config.BINDING['heat_pump_id'])
 

@@ -7,10 +7,10 @@ from typing import Dict, List
 from typing import Set
 
 #import config
-from bindings.BaseBinding import BaseBinding
-from bindings.elster.Converter import DEC, CENT, OPERATING_MODE, ONE
-from bindings.elster.ElsterFrame import ElsterFrame
-from bindings.elster.Entry import SimpleEntry, BaseEntry, ReadOnlyFormulaEntry
+from custom_components.stiebel_eltron_can.BaseBinding import BaseBinding
+from Converter import DEC, CENT, OPERATING_MODE, ONE
+from ElsterFrame import ElsterFrame
+from Entry import SimpleEntry, BaseEntry, ReadOnlyFormulaEntry
 
 
 class ElsterBinding(BaseBinding):
