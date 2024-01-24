@@ -1,4 +1,4 @@
-"""Support for stiebel_eltron climate platform."""
+"""Support for stiebel_eltron_can climate platform."""
 from __future__ import annotations
 
 import random
@@ -18,7 +18,7 @@ from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import DOMAIN as STE_DOMAIN
 
-DEPENDENCIES = ["stiebel_eltron"]
+DEPENDENCIES = ["stiebel_eltron_can"]
 
 _LOGGER = logging.getLogger(__name__)
 
