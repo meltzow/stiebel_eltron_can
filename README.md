@@ -22,9 +22,9 @@ This custom integration for Home Assistant allows users to monitor the status of
 
   
 ## setup the can bus on homeassistant OS: 
-0.) richtiger ssh benötigt!!!
-1.) apk add iproute2 
-2.) pip install python-can --break-system-packages
+1. richtiger ssh benötigt!!!
+2. apk add iproute2 
+3. pip install python-can --break-system-packages
 
 
 ip link set can0 txqueuelen 1000
