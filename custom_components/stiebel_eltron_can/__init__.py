@@ -10,7 +10,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import Throttle
 
-from .ElsterBinding import ElsterBinding
+from .bindings.elster.ElsterBinding import ElsterBinding
 
 CONF_HUB = "hub"
 DEFAULT_HUB = "modbus_hub"
@@ -39,6 +39,7 @@ def setup(hass: HomeAssistant, config: ConfigType) -> bool:
     Will automatically load climate platform.
     """
     name = config[DOMAIN][CONF_NAME]
+    
     #modbus_client = hass.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
 
     hass.data[DOMAIN] = {

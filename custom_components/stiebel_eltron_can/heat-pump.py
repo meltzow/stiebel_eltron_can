@@ -3,9 +3,9 @@
 from time import sleep
 
 import config
-from ElsterBinding import ElsterBinding
+from custom_components.stiebel_eltron_can.bindings.elster.ElsterBinding import ElsterBinding
 from InfluxDBBridge import InfluxDBBridge
-from MqttBridge import MqttBridge
+from custom_components.stiebel_eltron_can.bridges.MqttBridge import MqttBridge
 
 binding = ElsterBinding(config.BINDING['heat_pump_id'])
 

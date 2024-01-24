@@ -7,7 +7,7 @@ from typing import Dict, List
 from typing import Set
 
 #import config
-from .BaseBinding import BaseBinding
+from ..BaseBinding import BaseBinding
 from .Converter import DEC, CENT, OPERATING_MODE, ONE
 from .ElsterFrame import ElsterFrame
 from .Entry import SimpleEntry, BaseEntry, ReadOnlyFormulaEntry
@@ -273,7 +273,7 @@ class ElsterBinding(BaseBinding):
         #FIXME: make it configurable
         #if config.BINDING['handle_all_messages'] is False and frame.receiver != ElsterBinding.SENDER:
             # only parse messages directly send to us
-         #   return
+        #   return
         if msg.arbitration_id not in self.ENTRIES:
             return
         for entry in self.ENTRIES[msg.arbitration_id]:

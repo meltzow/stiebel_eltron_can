@@ -4,7 +4,7 @@ import time
 
 import can
 
-from ElsterFrame import ElsterFrame
+from .bindings.elster.ElsterFrame import ElsterFrame
 
 
 def on_can_message(msg):
@@ -16,7 +16,7 @@ def on_can_message(msg):
 
 
 # noinspection PyTypeChecker
-bus = can.Bus(bustype='socketcan_native', channel='can0', receive_own_messages=False)
+bus = can.Bus(bustype='socketcan', channel='can0', receive_own_messages=False)
 can.Notifier(bus, [on_can_message])
 
 while 1:
