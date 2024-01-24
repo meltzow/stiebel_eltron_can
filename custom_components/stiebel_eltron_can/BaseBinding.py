@@ -1,6 +1,6 @@
 from typing import List
 
-from BaseBridge import BaseBridge
+from .BaseBridge import BaseBridge
 
 
 class BaseBinding(object):

@@ -6,6 +6,6 @@
   "dependencies": [],
   "documentation": "https://github.com/meltzow/stiebel_eltron_can",
   "iot_class": "local_polling",
-  "requirements": ["python-can==4.3.1"],
+  "requirements": ["python-can==4.3.1", "paho-mqtt==1.6.1"],
   "version": "0.0.7"
 }

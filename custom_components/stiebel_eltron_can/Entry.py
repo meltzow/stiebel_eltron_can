@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from Converter import Converter
+from .Converter import Converter
 
 
 class BaseEntry(object):

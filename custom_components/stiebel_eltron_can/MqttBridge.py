@@ -1,7 +1,7 @@
 from paho.mqtt.client import Client as MqttClient, MQTTMessage
 
 #import config
-from BaseBridge import BaseBridge
+from .BaseBridge import BaseBridge
 
 
 class MqttBridge(BaseBridge):
