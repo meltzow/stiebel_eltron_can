@@ -34,7 +34,7 @@ class InfluxDBBridge(BaseBridge):
             data = data + " value=" + str(value)
         else:
             data = data + " str=\"" + str(value) + "\""
-            print data
+            print(data)
         requests.post(config.INFLUXDB['base_url'] + '/write?db=' + config.INFLUXDB['database'], data=data.encode('ISO-8859-1'))
 
 

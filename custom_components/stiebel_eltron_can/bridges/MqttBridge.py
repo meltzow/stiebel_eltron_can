@@ -23,7 +23,7 @@ class MqttBridge(BaseBridge):
             topics.append((topic, 0))
         if len(topics) == 0:
             return
-        print "mqtt subscribing to topics: ", topics
+        print("mqtt subscribing to topics: ", topics)
         client.subscribe(topics)
 
     # noinspection PyUnusedLocal
@@ -33,7 +33,7 @@ class MqttBridge(BaseBridge):
         self.binding.onApiMessage(topic, msg.payload)
 
     def start(self):
-        print "mqtt connect to:", config.MQTT['host']
+        print("mqtt connect to:", config.MQTT['host'])
         self.client.connect(config.MQTT['host'])
         self.client.loop_start()
 
