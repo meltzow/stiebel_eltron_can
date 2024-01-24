@@ -15,25 +15,13 @@ This custom integration for Home Assistant allows users to monitor the status of
 3. Restart your Home Assistant instance.
 
 
+## links 
+  * https://github.com/Andy2003/heat-pump-api
+  * https://python-can.readthedocs.io/en/stable/index.html
+  * https://github.com/fkwp/heat-pump-api/blob/master/doc/ElsterTable.inc
 
-## theory
-
-0x000c = Außentemperatur float temperature
-
-"HERSTELLER_KENNUNG"                               , 0x0147, 0
-"GERAETE_KENNUNG"                                  , 0x0148, 0
-
-
-### links 
-  https://github.com/Andy2003/heat-pump-api
   
-  https://github.com/fkwp/heat-pump-api/blob/master/doc/ElsterTable.inc
-  
-  https://python-can.readthedocs.io/en/stable/interfaces/gs_usb.html
-  https://elinux.org/Bringing_CAN_interface_up
-  
-  
-## setup: 
+## setup the can bus on homeassistant OS: 
 0.) richtiger ssh benötigt!!!
 1.) apk add iproute2 
 2.) pip install python-can
@@ -42,3 +30,9 @@ pip install python-can --break-system-packages
 
 ip link set can0 type can bitrate 125000
 ip link set dev can0 up type can bitrate 500000
+
+see https://elinux.org/Bringing_CAN_interface_up
+
+## Development
+* pip3 install homeassistant --break-system-packages
+* pip install python-can
