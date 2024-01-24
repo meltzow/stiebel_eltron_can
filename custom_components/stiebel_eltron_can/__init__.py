@@ -65,7 +65,7 @@ class StiebelEltronData:
     def update(self):
         """Update unit data."""
         #if not self.api.update():
-        self.binding.queryForData()
+        # self.binding.queryForData()
         #    _LOGGER.warning("Modbus read failed")
         #else:
         #    _LOGGER.debug("Data updated successfully")
