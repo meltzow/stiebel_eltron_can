@@ -73,4 +73,4 @@ class ElsterFrame(object):
             data[6] = ctypes.c_ubyte(self.value & 0xff).value
         return Message(arbitration_id=self.sender,
                        data=data,
-                       extended_id=False)
+                       is_extended_id=False)
