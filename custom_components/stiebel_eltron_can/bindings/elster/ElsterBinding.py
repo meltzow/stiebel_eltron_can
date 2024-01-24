@@ -269,7 +269,7 @@ class ElsterBinding(BaseBinding):
                         frame = ElsterFrame(sender=ElsterBinding.SENDER, receiver=receiver, elster_index=entry.getElsterIndices()[0],
                                             message_type=ElsterFrame.WRITE, value=can_value)
                         print(frame)
-                        _LOGGER.debug("onApiMessage " + frame)
+                        _LOGGER.debug("onApiMessage " + str(frame))
                         self.bus.send(frame.getCanMessage())
 
     def onCanMessage(self, msg):
@@ -286,7 +286,7 @@ class ElsterBinding(BaseBinding):
             if can_value is not None:
                 topic = self.base_topic + entry.publishing_topic
                 print(topic, can_value, entry.unit)
-                _LOGGER.debug("onCanMessage " + topic + " " + can_value + " " + entry.unit)
+                _LOGGER.debug("onCanMessage " + str(topic) + " " + str(can_value) + " " + entry.unit)
                 for bridge in self.bridges:
                     bridge.publishApiMessage(self.heat_pump_id, self.base_topic, entry.publishing_topic, can_value)
 
