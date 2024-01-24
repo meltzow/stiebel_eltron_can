@@ -12,7 +12,7 @@ def on_can_message(msg):
     frame = ElsterFrame(msg=msg)
     if msg.arbitration_id in (0x180, 0x500):
         if frame.type == ElsterFrame.RESPONSE:
-            print frame
+            print(frame)
 
 
 # noinspection PyTypeChecker
