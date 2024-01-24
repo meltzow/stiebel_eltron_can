@@ -247,7 +247,7 @@ class ElsterBinding(BaseBinding):
         super(ElsterBinding, self).__init__(heat_pump_id, topics)
 
         # noinspection PyTypeChecker
-        self.bus = can.Bus(bustype='socketcan_native', channel='can0', receive_own_messages=False)
+        self.bus = can.Bus(bustype='socketcan', channel='can0', receive_own_messages=False)
         can.Notifier(self.bus, [self.onCanMessage])
 
     def onApiMessage(self, topic, payload):
