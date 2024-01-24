@@ -10,6 +10,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import Throttle
 
+from bindings.elster.ElsterBinding import ElsterBinding
 
 CONF_HUB = "hub"
 DEFAULT_HUB = "modbus_hub"
@@ -55,13 +56,15 @@ class StiebelEltronData:
     def __init__(self, name):
         """Init the STIEBEL ELTRON data object."""
 
-        #self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
+        self.binding = ElsterBinding(name)
+        self.binding.start()
+#        self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     def update(self):
         """Update unit data."""
-        _LOGGER.error("foo bar after 30 secs")
         #if not self.api.update():
+        self.binding.queryForData()
         #    _LOGGER.warning("Modbus read failed")
         #else:
         #    _LOGGER.debug("Data updated successfully")
