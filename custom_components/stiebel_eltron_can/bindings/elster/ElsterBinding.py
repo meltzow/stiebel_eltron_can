@@ -279,6 +279,7 @@ class ElsterBinding(BaseBinding):
         #if config.BINDING['handle_all_messages'] is False and frame.receiver != ElsterBinding.SENDER:
             # only parse messages directly send to us
         #   return
+        _LOGGER.debug("onCanMessage ")
         if msg.arbitration_id not in self.ENTRIES:
             return
         for entry in self.ENTRIES[msg.arbitration_id]:
