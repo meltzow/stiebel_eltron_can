@@ -281,6 +281,7 @@ class ElsterBinding(BaseBinding):
         #   return
         _LOGGER.debug("onCanMessage ")
         if msg.arbitration_id not in self.ENTRIES:
+            _LOGGER.warning('onCanMessage msg.arbitration_id= %s no in ENTRIES', msg.arbitration_id  )
             return
         for entry in self.ENTRIES[msg.arbitration_id]:
             can_value = entry.parseCanValue(frame.elster_index, frame.value)
