@@ -18,7 +18,7 @@ This custom integration for Home Assistant allows users to monitor the status of
 ## links 
   * https://github.com/Andy2003/heat-pump-api
   * https://python-can.readthedocs.io/en/stable/index.html
-  * https://github.com/fkwp/heat-pump-api/blob/master/doc/ElsterTable.inc
+  * https://pypi.org/project/cantools/
 
   
 ## setup the can bus on homeassistant OS: 
