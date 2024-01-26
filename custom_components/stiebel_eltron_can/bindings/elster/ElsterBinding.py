@@ -236,7 +236,7 @@ class ElsterBinding(BaseBinding):
         self.base_topic = 'heatpump/' + heat_pump_id + '/'
         #self.ids_per_receiver = {}  # type: Dict[int, Set[int]]
 
-        for receiver, entries in self.ENTRIES.items():
+        for entries in self.ENTRIES:
             elster_ids = set()  # type: Set[int]
             #self.ids_per_receiver[receiver] = elster_ids
             for entry in entries:
