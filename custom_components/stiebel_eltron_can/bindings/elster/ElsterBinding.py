@@ -289,7 +289,7 @@ class ElsterBinding(BaseBinding):
             if can_value is not None:
                 topic = self.base_topic + entry.publishing_topic
                 print(topic, can_value, entry.unit)
-                _LOGGER.debug("onCanMessage " + str(topic) + " " + str(can_value) + " " + entry.unit)
+                _LOGGER.debug("onCanMessage " + str(topic) + "  " + str(can_value) + "  " + entry.unit)
                 for bridge in self.bridges:
                     bridge.publishApiMessage(self.heat_pump_id, self.base_topic, entry.publishing_topic, can_value)
 
