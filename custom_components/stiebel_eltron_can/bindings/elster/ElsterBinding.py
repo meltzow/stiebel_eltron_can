@@ -278,15 +278,14 @@ class ElsterBinding(BaseBinding):
         #   return
         _LOGGER.debug("onCanMessage ")
         #if msg.arbitration_id not in self.ENTRIES:
-        _LOGGER.debug('onCanMessage msg.arbitration_id= %s no in ENTRIES', msg.arbitration_id  )
-        _LOGGER.debug('onCanMessage index:' + str(frame.elster_index) + " type:" + str(frame.type) +  " sender:" + str(frame.sender) + " receiver:" + str(frame.receiver) + " value" +  str(frame.value) )
+        _LOGGER.debug('onCanMessage msg.arbitration_id= %s ', msg.arbitration_id  )
+        _LOGGER.info('onCanMessage index:' + str(frame.elster_index) + " type:" + str(frame.type) +  " sender:" + str(frame.sender) + " receiver:" + str(frame.receiver) + " value" +  str(frame.value) )
         #    return
         for entry in self.ENTRIES:
             can_value = entry.parseCanValue(frame.elster_index, frame.value)
             if can_value is not None:
                 topic = self.base_topic + entry.publishing_topic
-                print(topic, can_value, entry.unit)
-                _LOGGER.debug("onCanMessage topic" + str(topic) + " value: " + str(can_value) + " unit:" + entry.unit)
+                _LOGGER.info("onCanMessage topic" + str(topic) + " value: " + str(can_value) + " unit:" + entry.unit)
                 for bridge in self.bridges:
                     bridge.publishApiMessage(self.heat_pump_id, self.base_topic, entry.publishing_topic, can_value)
 
