@@ -236,14 +236,14 @@ class ElsterBinding(BaseBinding):
         self.base_topic = 'heatpump/' + heat_pump_id + '/'
         #self.ids_per_receiver = {}  # type: Dict[int, Set[int]]
 
-        for entries in self.ENTRIES:
+        for entry in self.ENTRIES:
             elster_ids = set()  # type: Set[int]
             #self.ids_per_receiver[receiver] = elster_ids
-            for entry in entries:
-                elster_ids.update(entry.getElsterIndices())
-                topic = entry.getTopicForUpdates()
-                if topic is not None:
-                    topics.append(self.base_topic + topic)
+#            for entry in entries:
+            elster_ids.update(entry.getElsterIndices())
+            topic = entry.getTopicForUpdates()
+            if topic is not None:
+                topics.append(self.base_topic + topic)
 
         super(ElsterBinding, self).__init__(heat_pump_id, topics)
 
