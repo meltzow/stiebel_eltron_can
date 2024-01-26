@@ -37,3 +37,7 @@ This custom integration for Home Assistant allows users to monitor the status of
 * pip install python-can
 * apk add can-utils
 * candump can0
+
+* alternative framework for using: https://pypi.org/project/cantools/
+* https://www.csselectronics.com/pages/dbc-editor-can-bus-database
+* https://github.com/danielbayerlein/sepicker
