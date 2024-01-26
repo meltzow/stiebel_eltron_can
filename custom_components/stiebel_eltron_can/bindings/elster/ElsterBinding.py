@@ -26,9 +26,7 @@ class ElsterBinding(BaseBinding):
 
     #  Structure taken from "BEDIENUNG UND INSTALLATION Wärmepumpen-Manager WPM 3" Chapter 5
     #  https://www.stiebel-eltron.de/toolbox/datengrab/montageanweisung/de/DM0000031125.pdf
-    ENTRIES = {
-        # Boiler
-        0x180: [
+    ENTRIES = [
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             # INFO / ANLAGE / HEIZUNG
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,9 +90,8 @@ class ElsterBinding(BaseBinding):
             SimpleEntry('boiler/hotwater/set_temperature/comfort', '°C', 0x0013, DEC, True),
             SimpleEntry('boiler/hotwater/set_temperature/standby', '°C', 0x0a06, DEC, True),
             SimpleEntry('operating_mode', '', 0x0112, OPERATING_MODE, True),
-        ],
         # heating unit
-        0x500: [
+#        0x500: [
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             # INFO / ANLAGE / PROZESSDATEN
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,9 +152,9 @@ class ElsterBinding(BaseBinding):
             # SOLLDREHZAHL LUEFTER Hz
             # VERDAMPFEREINGANGSTEMPERATUR °C
 
-        ],
+#        ],
         # Verdichter ???
-        514: [
+#        514: [
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             # INFO / ANLAGE / WÄRMEMENGE
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,16 +229,16 @@ class ElsterBinding(BaseBinding):
             # VERDICHTER 1
             # VERDICHTER 2
         ]
-    }  # type: Dict[int, List[BaseEntry]]
+    #}  # type: List[BaseEntry]
 
     def __init__(self, heat_pump_id):
         topics = []
         self.base_topic = 'heatpump/' + heat_pump_id + '/'
-        self.ids_per_receiver = {}  # type: Dict[int, Set[int]]
+        #self.ids_per_receiver = {}  # type: Dict[int, Set[int]]
 
         for receiver, entries in self.ENTRIES.items():
             elster_ids = set()  # type: Set[int]
-            self.ids_per_receiver[receiver] = elster_ids
+            #self.ids_per_receiver[receiver] = elster_ids
             for entry in entries:
                 elster_ids.update(entry.getElsterIndices())
                 topic = entry.getTopicForUpdates()
@@ -280,16 +277,16 @@ class ElsterBinding(BaseBinding):
             # only parse messages directly send to us
         #   return
         _LOGGER.debug("onCanMessage ")
-        if msg.arbitration_id not in self.ENTRIES:
-            _LOGGER.warning('onCanMessage msg.arbitration_id= %s no in ENTRIES', msg.arbitration_id  )
-            _LOGGER.warning('onCanMessage index:' + str(frame.elster_index) + " type:" + str(frame.type) +  " sender:" + str(frame.sender) + " receiver:" + str(frame.receiver) + " value" +  str(frame.value) )
-            return
-        for entry in self.ENTRIES[msg.arbitration_id]:
+        #if msg.arbitration_id not in self.ENTRIES:
+        _LOGGER.debug('onCanMessage msg.arbitration_id= %s no in ENTRIES', msg.arbitration_id  )
+        _LOGGER.debug('onCanMessage index:' + str(frame.elster_index) + " type:" + str(frame.type) +  " sender:" + str(frame.sender) + " receiver:" + str(frame.receiver) + " value" +  str(frame.value) )
+        #    return
+        for entry in self.ENTRIES:
             can_value = entry.parseCanValue(frame.elster_index, frame.value)
             if can_value is not None:
                 topic = self.base_topic + entry.publishing_topic
                 print(topic, can_value, entry.unit)
-                _LOGGER.debug("onCanMessage " + str(topic) + "  " + str(can_value) + "  " + entry.unit)
+                _LOGGER.debug("onCanMessage topic" + str(topic) + " value: " + str(can_value) + " unit:" + entry.unit)
                 for bridge in self.bridges:
                     bridge.publishApiMessage(self.heat_pump_id, self.base_topic, entry.publishing_topic, can_value)
 
