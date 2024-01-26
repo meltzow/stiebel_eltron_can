@@ -22,7 +22,7 @@ This custom integration for Home Assistant allows users to monitor the status of
 
   
 ## setup the can bus on homeassistant OS: 
-1. richtiger ssh benötigt!!!
+1. use add-on "Advanced SSH & Web Terminal" (see https://github.com/hassio-addons/addon-ssh)
 2. apk add iproute2 
 3. ip link set can0 txqueuelen 1000
 4. ip link set dev can0 up type can bitrate 50000
