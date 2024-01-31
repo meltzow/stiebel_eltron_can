@@ -41,3 +41,12 @@ This custom integration for Home Assistant allows users to monitor the status of
 * alternative framework for using: https://pypi.org/project/cantools/
 * https://www.csselectronics.com/pages/dbc-editor-can-bus-database
 * https://github.com/danielbayerlein/sepicker
+
+
+## found positive log entries
+
+topicheatpump/HSBC 300 cool/outside/environment/temperature value: 0.0 unit:°C
+topicheatpump/HSBC 300 cool/outside/environment/temperature value: 1.9000000000000001 unit:°C
+topicheatpump/HSBC 300 cool/inverter/environment/temperature value: 1.9000000000000001 unit:°C
+topicheatpump/HSBC 300 cool/boiler/hotwater/temperature value: 0.0 unit:°C
+topicheatpump/HSBC 300 cool/boiler/hotwater/temperature value: 45.400000000000006 unit:°C
