@@ -27,7 +27,7 @@ class ElsterBinding(BaseBinding):
     #  Structure taken from "BEDIENUNG UND INSTALLATION Wärmepumpen-Manager WPM 3" Chapter 5
     #  https://www.stiebel-eltron.de/toolbox/datengrab/montageanweisung/de/DM0000031125.pdf
     ENTRIES = [
-            SimpleEntry('heatpump/heating/heizkurve','°C', 0x010e, et_cent_val)
+            SimpleEntry('heatpump/heating/heizkurve','°C', 0x010e, CENT),
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             # INFO / ANLAGE / HEIZUNG
             # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
