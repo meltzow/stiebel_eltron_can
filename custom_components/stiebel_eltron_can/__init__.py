@@ -1,71 +1,24 @@
-from datetime import timedelta
+"""
+Dobiss CAN Bus Integration
+"""
 import logging
 
-import voluptuous as vol
-
-from homeassistant.const import CONF_NAME, DEVICE_DEFAULT_NAME, Platform
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import discovery
-import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.typing import ConfigType
-from homeassistant.util import Throttle
 
-from .bindings.elster.ElsterBinding import ElsterBinding
+from .const import *
 
-CONF_HUB = "hub"
-DEFAULT_HUB = "modbus_hub"
-MODBUS_DOMAIN = "modbus"
-DOMAIN = "stiebel_eltron_can"
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Optional(CONF_NAME, default=DEVICE_DEFAULT_NAME): cv.string,
-                vol.Optional(CONF_HUB, default=DEFAULT_HUB): cv.string,
-            }
-        )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
+_LOGGER = logging.getLogger(DOMAIN)
+_LOGGER.setLevel(logging.DEBUG)
 
-_LOGGER = logging.getLogger(__name__)
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+    _LOGGER.debug("async_setup_entry2 %r %r", entry, entry.data)
 
-def setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Set up the STIEBEL ELTRON unit.
+    hass.data.setdefault(DOMAIN, {})
+    hass.data[DOMAIN][entry.entry_id] = entry.data
 
-    Will automatically load climate platform.
-    """
-    name = config[DOMAIN][CONF_NAME]
-    
-    #modbus_client = hass.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
-
-    hass.data[DOMAIN] = {
-        "name": name,
-        "ste_data": StiebelEltronData(name),
-    }
-
-    discovery.load_platform(hass, Platform.CLIMATE, DOMAIN, {}, config)
+    # Forward the setup to the sensor platform.
+    hass.async_create_task(hass.config_entries.async_forward_entry_setup(entry, "light"))
     return True
-
-
-class StiebelEltronData:
-    """Get the latest data and update the states."""
-
-    def __init__(self, name):
-        """Init the STIEBEL ELTRON data object."""
-
-        self.binding = ElsterBinding(name)
-        self.binding.start()
-#        self.api = pystiebeleltron.StiebelEltronAPI(modbus_client, 1)
-
-    @Throttle(MIN_TIME_BETWEEN_UPDATES)
-    def update(self):
-        """Update unit data."""
-        #if not self.api.update():
-        # self.binding.queryForData()
-        #    _LOGGER.warning("Modbus read failed")
-        #else:
-        #    _LOGGER.debug("Data updated successfully")

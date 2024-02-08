@@ -1,104 +1,59 @@
-"""Config flow for Stiebel Eltron CAN integration."""
-from __future__ import annotations
-
 import logging
-from typing import Any
+from typing import Any, Dict, Optional
 
+import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-
 from homeassistant import config_entries
-from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
-from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
-from homeassistant.exceptions import HomeAssistantError
+from homeassistant.const import CONF_LIGHTS, CONF_NAME
 
-from .const import DOMAIN
-
-_LOGGER = logging.getLogger(__name__)
-
-# TODO adjust the data schema to the data that you need
-STEP_USER_DATA_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_HOST): str,
-        vol.Required(CONF_USERNAME): str,
-        vol.Required(CONF_PASSWORD): str,
-    }
-)
+from .const import *
 
 
-class PlaceholderHub:
-    """Placeholder class to make tests pass.
-
-    TODO Remove this placeholder class and replace with things from your PyPI package.
-    """
-
-    def __init__(self, host: str) -> None:
-        """Initialize."""
-        self.host = host
-
-    async def authenticate(self, username: str, password: str) -> bool:
-        """Test if we can authenticate with the host."""
-        return True
+_LOGGER = logging.getLogger(DOMAIN)
+_LOGGER.setLevel(logging.DEBUG)
 
 
-async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
-    """Validate the user input allows us to connect.
+CAN = vol.Schema({
+    vol.Optional(CONF_INTERFACE, default="socketcan"): cv.string,
+    vol.Optional(CONF_CHANNEL, default="can0"): cv.string,
+})
 
-    Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
-    """
-    # TODO validate the data can be used to set up a connection.
-
-    # If your PyPI package is not built with async, pass your methods
-    # to the executor:
-    # await hass.async_add_executor_job(
-    #     your_validate_func, data[CONF_USERNAME], data[CONF_PASSWORD]
-    # )
-
-    hub = PlaceholderHub(data[CONF_HOST])
-
-    if not await hub.authenticate(data[CONF_USERNAME], data[CONF_PASSWORD]):
-        raise InvalidAuth
-
-    # If you cannot connect:
-    # throw CannotConnect
-    # If the authentication is wrong:
-    # InvalidAuth
-
-    # Return info that you want to store in the config entry.
-    return {"title": "Name of the device"}
+ENTRY = vol.Schema({
+    vol.Required(CONF_NAME): cv.string,
+    vol.Required(CONF_MODULE, default=1): cv.positive_int,
+    vol.Required(CONF_RELAY, default=0): cv.positive_int,
+    vol.Optional("add_another", default=True): cv.boolean,
+})
 
 
-class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Stiebel Eltron CAN."""
+class DobissCANConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """DobissCAN config flow."""
 
-    VERSION = 1
+    def __init__(self) -> None:
+        super().__init__()
+        _LOGGER.warning("DobissCANConfigFlow 2")
+        self.data: Dict[str, Any] = {}
 
-    async def async_step_user(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
-        """Handle the initial step."""
-        errors: dict[str, str] = {}
+    async def async_step_user(self, user_input=None):
+        _LOGGER.warning("async_step_user %r %r", user_input, self.data)
+
         if user_input is not None:
-            try:
-                info = await validate_input(self.hass, user_input)
-            except CannotConnect:
-                errors["base"] = "cannot_connect"
-            except InvalidAuth:
-                errors["base"] = "invalid_auth"
-            except Exception:  # pylint: disable=broad-except
-                _LOGGER.exception("Unexpected exception")
-                errors["base"] = "unknown"
-            else:
-                return self.async_create_entry(title=info["title"], data=user_input)
+            self.data.update(user_input)
+            self.data[CONF_LIGHTS] = []
+            return await self.async_step_light()
 
-        return self.async_show_form(
-            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
-        )
+        return self.async_show_form(step_id="user", data_schema=CAN)
 
+    async def async_step_light(self, user_input=None):
+        _LOGGER.warning("async_step_light %r %r", user_input, self.data)
 
-class CannotConnect(HomeAssistantError):
-    """Error to indicate we cannot connect."""
+        if user_input is not None:
+            cont = user_input.pop("add_another", False)
 
+            self.data[CONF_LIGHTS].append(user_input)
 
-class InvalidAuth(HomeAssistantError):
-    """Error to indicate there is invalid auth."""
+            if not cont:
+                # User is done adding lights, create the config entry.
+                return self.async_create_entry(title="Dobiss Custom", data=self.data)
+
+        return self.async_show_form(step_id="light", data_schema=ENTRY)

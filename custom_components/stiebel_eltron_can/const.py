@@ -1,1 +1,7 @@
-DOMAIN = "stiebel_eltron_can"
+DOMAIN = 'stiebel_eltron_can'
+
+CONF_INTERFACE = 'interface'
+CONF_CHANNEL = 'channel'
+CONF_MODULE = 'module'
+CONF_RELAY = 'relay'
+
