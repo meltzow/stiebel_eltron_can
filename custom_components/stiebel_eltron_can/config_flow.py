@@ -54,6 +54,6 @@ class DobissCANConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             if not cont:
                 # User is done adding lights, create the config entry.
-                return self.async_create_entry(title="Dobiss Custom", data=self.data)
+                return self.async_create_entry(title="Stiebel Eltron Custom", data=self.data)
 
         return self.async_show_form(step_id="light", data_schema=ENTRY)

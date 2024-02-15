@@ -78,10 +78,8 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, asyn
     # The reply will then only be acked by the entity that holds the lock.
     # I don't like this, it smells, but it works and IDK how to do it better.
     lock = asyncio.Lock()
-    name = hass.data[DOMAIN]["name"]
-    ste_data = hass.data[DOMAIN]["ste_data"]
 
-    entities = [StiebelEltron(bus, name, lock, config_entry.entry_id, ste_data)]
+    entities = [StiebelEltron(bus, e, lock, config_entry.entry_id) for e in data[CONF_LIGHTS]]
     notifier = can.Notifier(bus, [e.on_can_message_received for e in entities], loop=asyncio.get_running_loop())
     async_add_entities(entities)
 
@@ -111,12 +109,15 @@ class StiebelEltron(ClimateEntity):
             "name": self._name,
         }
 
-    def __init__(self, bus: can.BusABC, name: str, lock: asyncio.Lock, prefix: str, ste_data):
+    def __init__(self, bus: can.BusABC, o: dict, lock: asyncio.Lock, prefix: str):
         """Initialize the unit."""
         self._bus = bus
         self._lock = lock
         # Unpack some config values
-        self._name = name
+        # Unpack some config values
+        self._name: str = o[CONF_NAME]
+        self._module = o[CONF_MODULE]
+        self._relay = o[CONF_RELAY]
         self._outsideTemperatur = None
         self._target_temperature = None
         self._current_temperature = None
@@ -124,7 +125,6 @@ class StiebelEltron(ClimateEntity):
         self._operation = None
         self._filter_alarm = None
         self._force_update = False
-        self._ste_data = ste_data
         # Prepare fixed ids & payloads
         self._set_id: int = 0x01FC0002 | (self._module << 8)
         self._bytes_off: bytes = bytes((self._module, self._relay, 0, 0xFF, 0xFF))
@@ -206,7 +206,7 @@ class StiebelEltron(ClimateEntity):
             return
         new_mode = HA_TO_STE_HVAC.get(hvac_mode)
         _LOGGER.debug("set_hvac_mode: %s -> %s", self._operation, new_mode)
-        self._ste_data.api.set_operation(new_mode)
+        #self._ste_data.api.set_operation(new_mode)
         self._force_update = True
 
     def set_temperature(self, **kwargs: Any) -> None:
@@ -214,14 +214,14 @@ class StiebelEltron(ClimateEntity):
         target_temperature = kwargs.get(ATTR_TEMPERATURE)
         if target_temperature is not None:
             _LOGGER.debug("set_temperature: %s", target_temperature)
-            self._ste_data.api.set_target_temp(target_temperature)
+            #self._ste_data.api.set_target_temp(target_temperature)
             self._force_update = True
 
     def set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
         new_mode = HA_TO_STE_PRESET.get(preset_mode)
         _LOGGER.debug("set_hvac_mode: %s -> %s", self._operation, new_mode)
-        self._ste_data.api.set_operation(new_mode)
+        #self._ste_data.api.set_operation(new_mode)
         self._force_update = True
 
     @property
