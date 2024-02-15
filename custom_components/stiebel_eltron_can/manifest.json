@@ -5,8 +5,8 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/meltzow/stiebel_eltron_can",
-  "issue_tracker": "https://github.com/meltzow/stiebel_eltron_can/issues",
   "iot_class": "local_push",
+  "issue_tracker": "https://github.com/meltzow/stiebel_eltron_can/issues",
   "requirements": [
     "python-can~=4.0.0"
   ],  
