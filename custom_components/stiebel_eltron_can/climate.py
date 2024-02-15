@@ -121,7 +121,7 @@ class StiebelEltron(ClimateEntity):
         self._outsideTemperatur = None
         self._target_temperature = None
         self._current_temperature = None
-        self._current_humidity = None
+        self._current_humidity = 30.0
         self._operation = None
         self._filter_alarm = None
         self._force_update = False
