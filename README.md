@@ -31,6 +31,11 @@ This custom integration for Home Assistant allows users to monitor the status of
 ### links
 * https://elinux.org/Bringing_CAN_interface_up
 * https://python-can.readthedocs.io/en/stable/interfaces/socketcan.html
+* https://github.com/andig/goelster
+* https://github.com/Andy2003/heat-pump-api
+* https://github.com/kr0ner/OneESP32ToRuleThemAll
+* https://github.com/bullitt186/ha-stiebel-control
+* https://github.com/roberreiter/StiebelEltron-heatpump-over-esphome-can-bus
 
 ## Development
 * pip3 install homeassistant --break-system-packages
@@ -41,6 +46,8 @@ This custom integration for Home Assistant allows users to monitor the status of
 * alternative framework for using: https://pypi.org/project/cantools/
 * https://www.csselectronics.com/pages/dbc-editor-can-bus-database
 * https://github.com/danielbayerlein/sepicker
+* https://developers.home-assistant.io/docs/integration_fetching_data/
+* https://github.com/home-assistant/example-custom-config/tree/master/custom_components/example_sensor/
 
 
 ## found positive log entries

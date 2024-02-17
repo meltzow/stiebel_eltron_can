@@ -68,10 +68,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, asyn
     # Load CAN bus. Must be operational already (done by external network tool).
     # Setting bitrate might work, but ideally that should also be set already.
     # We only care about messages related to feedback from a SET command or the reply from a GET command.
-    bus = can.Bus(bustype=data[CONF_INTERFACE], channel=data[CONF_CHANNEL], bitrate=125000, receive_own_messages=True, can_filters=[
-        {"can_id": 0x0002FF01, "can_mask": 0x1FFFFFFF, "extended": True},  # Reply to SET
-        {"can_id": 0x01FDFF01, "can_mask": 0x1FFFFFFF, "extended": True},  # Reply to GET
-    ])
+    bus = can.Bus(bustype=data[CONF_INTERFACE], channel=data[CONF_CHANNEL], bitrate=50000, receive_own_messages=True)
 
     # Global CAN bus lock, required since the reply to a GET does not include any differentiator.
     # This means we must lock, then send out a GET request.
@@ -235,9 +232,10 @@ class StiebelEltron(ClimateEntity):
         self._bus.send(can.Message(arbitration_id=self._set_id, data=self._bytes_off, is_extended_id=True), timeout=.1)
 
     def on_can_message_received(self, msg: can.Message):
+        _LOGGER.debug("on_can_message_received: %s -> %s", self._operation, msg.arbitration_id)
         #FIXME must be multiply with 0.1
         if msg.data[2] == 0x0C:
-            self.outside_temperature = ctypes.c_int16(((msg.data[3] & 0xFF) << 8) | (msg.data[4] & 0xFF)).value
+            self._outsideTemperatur = ctypes.c_int16(((msg.data[3] & 0xFF) << 8) | (msg.data[4] & 0xFF)).value
 
         # Reply to SET, this we can filter because data contains data from.
         if msg.arbitration_id == 0x0002FF01 and msg.data[0] == self._module and msg.data[1] == self._relay:
@@ -256,9 +254,10 @@ class StiebelEltron(ClimateEntity):
                 # Small delay, otherwise we overload the CAN module.
                 await asyncio.sleep(.01)
                 # Ask CAN module for an update
-                self._bus.send(can.Message(arbitration_id=0x01FCFF01, data=self._bytes_status, is_extended_id=True), timeout=.1)
+                #FIXME: add correct can message (request) 
+                #self._bus.send(can.Message(arbitration_id=0x01FCFF01, data=self._bytes_status, is_extended_id=True), timeout=.1)
                 # Wait for reply to come
-                await asyncio.wait_for(self._event_update.wait(), 0.5)
+                #await asyncio.wait_for(self._event_update.wait(), 0.5)
                 # Small delay, otherwise we overload the CAN module.
                 await asyncio.sleep(.01)
             finally:
